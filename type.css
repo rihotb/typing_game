@@ -6,8 +6,31 @@ body {
 #question {
   font-size: 2em;
   letter-spacing: 0.1em;
+  margin-bottom: 20px;
 }
 
 #input {
   font-size: 1.5em;
+  letter-spacing: 0.1em;
+}
+
+#start {
+  font-size: 1.5em;
+  padding: 5px 30px;
+  border-radius: 100vh;
+  border-style: none;
+  margin-top: 100px;
+}
+
+#start:hover {
+  background-color: gray;
+}
+
+#message {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+#rate, #mistake {
+  font-size: 1.2em;
 }
