@@ -40,9 +40,11 @@ const button = document.getElementById("start");
 let time = 30;
 //単語のindex
 let charIndex = 0;
+//配列のindex
+let wordIndex = 1;
 //スコア
 let score = 0;
-//間違いの数
+//ミスタイプの数
 let mistake = 0;
 
 /**
@@ -63,11 +65,27 @@ function init() {
 }
 
 /**
- * 配列のindexをランダムに取得して問題文を表示する
+ * 配列をシャッフルして最初の問題文を表示する。
  */
-function pickAndShowQuestion() {
-  const randomIndex = Math.floor(Math.random() * wordsList.length);
-  displayQuestion.innerHTML = wordsList[randomIndex];
+function shuffleAndShowQuestion() {
+  for (i = wordsList.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    let tmp = wordsList[i];
+    wordsList[i] = wordsList[j];
+    wordsList[j] = tmp;
+  }
+  displayQuestion.innerHTML = wordsList[0];
+}
+
+/**
+ * 次の問題文を表示する。
+ */
+function nextQuestion() {
+  displayQuestion.innerHTML = wordsList[wordIndex];
+  displayInput.innerHTML = "";
+  charIndex = 0;
+  score++;
+  wordIndex++;
 }
 
 /**
@@ -90,10 +108,7 @@ document.onkeydown = function (e) {
     charIndex++;
     //入力文字数が問題文の文字数と同じになったら（最後まで入力したら）、次の問題へ
     if (displayQuestion.innerHTML.length === displayInput.innerHTML.length) {
-      pickAndShowQuestion();
-      displayInput.innerHTML = "";
-      charIndex = 0;
-      score++;
+      nextQuestion();
     }
   } else {
     mistake++;
@@ -103,6 +118,7 @@ document.onkeydown = function (e) {
 function finishGame() {
   displayMessage.innerHTML = "Finish!!";
   displayQuestion.innerHTML = "";
+  displayInput.innerHTML = "";
   displayScore.innerHTML = "得点は" + score + "点でした";
   displayMistake.innerHTML = "ミスタイプ数は" + mistake + "回でした";
 }
