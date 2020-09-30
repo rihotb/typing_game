@@ -32,7 +32,7 @@ const displayQuestion = document.getElementById("question");
 const displayInput = document.getElementById("input");
 const displayTime = document.getElementById("timer");
 const displayMessage = document.getElementById("message");
-const displayScore = document.getElementById("score");
+const displayRate = document.getElementById("rate");
 const displayMistake = document.getElementById("mistake");
 const button = document.getElementById("start");
 
@@ -42,10 +42,12 @@ let time = 30;
 let charIndex = 0;
 //配列のindex
 let wordIndex = 1;
-//スコア
-let score = 0;
-//ミスタイプの数
+//ミスタイプ数
 let mistake = 0;
+//総タイプ数
+let allType = 0;
+//正解率
+let correctRate = 0;
 
 /**
  * スタートボタンが押されたら初期化処理が実行される
@@ -60,7 +62,7 @@ function onButtonClick() {
  * 初期化処理
  */
 function init() {
-  pickAndShowQuestion();
+  shuffleAndShowQuestion();
   setInterval(countdown, 1000);
 }
 
@@ -84,7 +86,6 @@ function nextQuestion() {
   displayQuestion.innerHTML = wordsList[wordIndex];
   displayInput.innerHTML = "";
   charIndex = 0;
-  score++;
   wordIndex++;
 }
 
@@ -100,8 +101,11 @@ function countdown() {
   time--;
 }
 
-//キーボードを押した時の処理
+/**
+ * キーボードを押した時に動く
+ */
 document.onkeydown = function (e) {
+  allType++;
   //押したキーボードと問題文の文字が合っているいるかどうかをチェック
   if (e.key === displayQuestion.innerHTML[charIndex]) {
     displayInput.innerHTML = displayInput.innerHTML + e.key;
@@ -115,10 +119,16 @@ document.onkeydown = function (e) {
   }
 };
 
+/**
+ * ゲームが終了したら動く
+ */
 function finishGame() {
-  displayMessage.innerHTML = "Finish!!";
+  //正解率を計算する
+  correctRate = Math.round(((allType - mistake) / allType) * 100);
+  displayTime.innerHTML = "";
+  displayMessage.innerHTML = "結果";
   displayQuestion.innerHTML = "";
   displayInput.innerHTML = "";
-  displayScore.innerHTML = "得点は" + score + "点でした";
+  displayRate.innerHTML = "正解率は" + correctRate + "%でした";
   displayMistake.innerHTML = "ミスタイプ数は" + mistake + "回でした";
 }
