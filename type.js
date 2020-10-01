@@ -55,7 +55,7 @@ let correctRate = 0;
 function onButtonClick() {
   init();
   //ボタンが非表示になる
-  button.style.display = "none";
+  button.style.visibility = "hidden";
 }
 
 /**
@@ -105,6 +105,9 @@ function countdown() {
  * キーボードを押した時に動く
  */
 document.onkeydown = function (e) {
+  if (!displayQuestion.innerHTML) {
+    return;
+  }
   allType++;
   //押したキーボードと問題文の文字が合っているいるかどうかをチェック
   if (e.key === displayQuestion.innerHTML[charIndex]) {
