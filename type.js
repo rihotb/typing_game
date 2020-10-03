@@ -26,6 +26,14 @@ const wordsList = [
   "silly",
   "single",
   "suddenly",
+  "against",
+  "further",
+  "husband",
+  "mainly",
+  "ownership",
+  "rather",
+  "south",
+  "suggestion",
 ];
 
 const displayQuestion = document.getElementById("question");
@@ -39,15 +47,17 @@ const button = document.getElementById("start");
 //制限時間
 let time = 30;
 //単語のindex
-let charIndex = 0;
+let charIndex;
 //配列のindex
-let wordIndex = 1;
+let wordIndex;
 //ミスタイプ数
-let mistake = 0;
+let mistake;
 //総タイプ数
-let allType = 0;
+let allType;
 //正解率
-let correctRate = 0;
+let correctRate;
+//残り時間
+let timeLeft;
 
 /**
  * スタートボタンが押されたら初期化処理が実行される
@@ -63,7 +73,20 @@ function onButtonClick() {
  */
 function init() {
   shuffleAndShowQuestion();
-  setInterval(countdown, 1000);
+  timeLeft = time;
+  timer = setInterval(countdown, 1000);
+  clearData();
+}
+
+function clearData() {
+  displayMessage.innerHTML = "";
+  displayRate.innerHTML = "";
+  displayMistake.innerHTML = "";
+  correctRate = 0;
+  mistake = 0;
+  allType = 0;
+  charIndex = 0;
+  wordIndex = 1;
 }
 
 /**
@@ -93,12 +116,13 @@ function nextQuestion() {
  * カウントダウン処理
  */
 function countdown() {
-  displayTime.innerHTML = time;
-  if (time === 0) {
+  if (timeLeft === 0) {
+    clearInterval(timer);
     finishGame();
     return;
   }
-  time--;
+  displayTime.innerHTML = timeLeft;
+  timeLeft--;
 }
 
 /**
@@ -134,4 +158,5 @@ function finishGame() {
   displayInput.innerHTML = "";
   displayRate.innerHTML = "正解率は" + correctRate + "%でした";
   displayMistake.innerHTML = "ミスタイプ数は" + mistake + "回でした";
+  button.style.visibility = "visible";
 }
