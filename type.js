@@ -50,7 +50,7 @@ let time = 30;
 let charIndex;
 //配列のindex
 let wordIndex;
-//ミスタイプ数
+//タイプミス数
 let mistake;
 //総タイプ数
 let allType;
@@ -143,8 +143,18 @@ document.onkeydown = function (e) {
     }
   } else {
     mistake++;
+    makeNoise();
   }
 };
+
+/**
+ * タイプミスしたらブザー音が鳴る
+ */
+function makeNoise() {
+  const buzzer = new Audio();
+  buzzer.src = "./buzzer.mp3";
+  buzzer.play();
+}
 
 /**
  * ゲームが終了したら動く
@@ -157,6 +167,6 @@ function finishGame() {
   displayQuestion.innerHTML = "";
   displayInput.innerHTML = "";
   displayRate.innerHTML = "正解率は" + correctRate + "%でした";
-  displayMistake.innerHTML = "ミスタイプ数は" + mistake + "回でした";
+  displayMistake.innerHTML = "タイプミス数は" + mistake + "回でした";
   button.style.visibility = "visible";
 }
