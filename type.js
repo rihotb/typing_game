@@ -140,17 +140,27 @@ document.onkeydown = function (e) {
     //入力文字数が問題文の文字数と同じになったら（最後まで入力したら）、次の問題へ
     if (displayQuestion.innerHTML.length === displayInput.innerHTML.length) {
       nextQuestion();
+      correctSound();
     }
   } else {
     mistake++;
-    makeNoise();
+    missSound();
   }
 };
 
 /**
+ * 単語を入力し終わったら正解音が鳴る
+ */
+function correctSound() {
+  const correct = new Audio();
+  correct.src = "./correct.mp3";
+  correct.play();
+}
+
+/**
  * タイプミスしたらブザー音が鳴る
  */
-function makeNoise() {
+function missSound() {
   const buzzer = new Audio();
   buzzer.src = "./buzzer.mp3";
   buzzer.play();
