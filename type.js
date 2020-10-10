@@ -40,8 +40,7 @@ const displayQuestion = document.getElementById("question");
 const displayInput = document.getElementById("input");
 const displayTime = document.getElementById("timer");
 const displayMessage = document.getElementById("message");
-const displayRate = document.getElementById("rate");
-const displayMistake = document.getElementById("mistake");
+const displayResult = document.getElementById("result");
 const button = document.getElementById("start");
 
 //制限時間
@@ -58,6 +57,7 @@ let allType;
 let correctRate;
 //残り時間
 let timeLeft;
+let score;
 
 /**
  * スタートボタンが押されたら初期化処理が実行される
@@ -80,11 +80,11 @@ function init() {
 
 function clearData() {
   displayMessage.innerHTML = "";
-  displayRate.innerHTML = "";
-  displayMistake.innerHTML = "";
+  displayResult.innerHTML = "";
   correctRate = 0;
   mistake = 0;
   allType = 0;
+  score = 0;
   charIndex = 0;
   wordIndex = 1;
 }
@@ -137,6 +137,7 @@ document.onkeydown = function (e) {
   if (e.key === displayQuestion.innerHTML[charIndex]) {
     displayInput.innerHTML = displayInput.innerHTML + e.key;
     charIndex++;
+    score++;
     //入力文字数が問題文の文字数と同じになったら（最後まで入力したら）、次の問題へ
     if (displayQuestion.innerHTML.length === displayInput.innerHTML.length) {
       nextQuestion();
@@ -153,7 +154,7 @@ document.onkeydown = function (e) {
  */
 function correctSound() {
   const correct = new Audio();
-  correct.src = "./correct.mp3";
+  correct.src = "./sound/correct.mp3";
   correct.play();
 }
 
@@ -162,7 +163,7 @@ function correctSound() {
  */
 function missSound() {
   const buzzer = new Audio();
-  buzzer.src = "./buzzer.mp3";
+  buzzer.src = "./sound/buzzer.mp3";
   buzzer.play();
 }
 
@@ -176,7 +177,15 @@ function finishGame() {
   displayMessage.innerHTML = "結果";
   displayQuestion.innerHTML = "";
   displayInput.innerHTML = "";
-  displayRate.innerHTML = "正解率は" + correctRate + "%でした";
-  displayMistake.innerHTML = "タイプミス数は" + mistake + "回でした";
+  displayResult.innerHTML =
+    "スコアは" +
+    score +
+    "点でした<br>" +
+    "正解率は" +
+    correctRate +
+    "%でした<br>" +
+    "タイプミス数は" +
+    mistake +
+    "回でした";
   button.style.visibility = "visible";
 }
