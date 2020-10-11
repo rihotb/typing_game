@@ -34,6 +34,12 @@ const wordsList = [
   "rather",
   "south",
   "suggestion",
+  "edition",
+  "effective",
+  "guideline",
+  "module",
+  "penalty",
+  "ratio"
 ];
 
 const displayQuestion = document.getElementById("question");
@@ -57,6 +63,7 @@ let allType;
 let correctRate;
 //残り時間
 let timeLeft;
+//スコア
 let score;
 
 /**
@@ -90,7 +97,7 @@ function clearData() {
 }
 
 /**
- * 配列をシャッフルして最初の問題文を表示する。
+ * 配列をシャッフルして最初の問題文を表示する
  */
 function shuffleAndShowQuestion() {
   for (i = wordsList.length - 1; i > 0; i--) {
@@ -103,7 +110,7 @@ function shuffleAndShowQuestion() {
 }
 
 /**
- * 次の問題文を表示する。
+ * 次の問題文を表示する
  */
 function nextQuestion() {
   displayQuestion.innerHTML = wordsList[wordIndex];
